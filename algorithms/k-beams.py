@@ -5,9 +5,9 @@ import math
 
 from table import Table
 from utils import generate_random_states
-from utils import best_moves
+from utils import k_best_moves
 from utils import apply_best_moves
-from utils import find_best_board_ids
+from utils import find_k_best_board_ids
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-row_shape', type=int, help='number of rows of the table')
@@ -31,9 +31,9 @@ def k_beams(table, k, p):
                 'time': abstime}
     while True:
         num_iter += 1
-        best_move_list = [best_moves(table=i, k=k) for i in table_class_list]
+        best_move_list = [k_best_moves(table=i, k=k) for i in table_class_list]
         best_list = np.array([apply_best_moves(table_class_list[math.floor(i/k)],best_move_list[math.floor(i/k)])[i%k] for i in range(k*k)])
-        selected_board_ids = find_best_board_ids(best_list,k)
+        selected_board_ids = find_k_best_board_ids(best_list,k)
         for i in range(k):
             table_class_list[i].set_board(best_list[selected_board_ids[i]])
             if table_class_list[i].if_goal:

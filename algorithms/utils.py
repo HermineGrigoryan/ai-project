@@ -10,7 +10,7 @@ def generate_random_states(table,k,p):
     return table_class_lst
 
 
-def best_moves(table, k):
+def k_best_moves(table, k):
     row_best, col_best = [], []
     row_sums, col_sums = table.line_sums
     line_sums = np.append(row_sums, col_sums)
@@ -32,7 +32,7 @@ def apply_best_moves(table, best_tuple):
         best_table_list[i+len(row_best)] = table.get_col_changed(col_best[i])
     return best_table_list
 
-def find_best_board_ids(board_list, k):
+def find_k_best_board_ids(board_list, k):
     util_list = np.array([np.sum(i) for i in board_list])
     maxlist = []
     for _ in range(k):
