@@ -7,7 +7,7 @@ class Table():
         self.col_shape = col_shape
 
     def create_table(self):
-        board = np.random.normal(loc = 0, scale = 1, size = (self.row_shape, self.col_shape))
+        board = np.random.normal(loc = 0, scale = 20, size = (self.row_shape, self.col_shape))
         self.board = board
         return board
 

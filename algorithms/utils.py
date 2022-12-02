@@ -65,3 +65,23 @@ def choose_random(table,dict):
         line_type = 'col'
         chosen_id = chosen_id-table.row_shape
     return {'line':line_type, 'id':chosen_id}
+
+
+def get_first_id_row_first(table):
+    row_sign_lst = np.sign(table.line_sums[0])
+    min_row_id= np.argmin(row_sign_lst)
+    if row_sign_lst[min_row_id]<0:
+        return {'line':'row','id':min_row_id}
+    return {'line':'col','id':np.argmin(np.sign(table.line_sums[1]))}
+
+def get_first_id_row_col(table):
+    row_sign_lst = np.sign(table.line_sums[0])
+    col_sign_lst = np.sign(table.line_sums[1])
+    min_row_id= np.argmin(row_sign_lst)
+    min_col_id= np.argmin(col_sign_lst)
+    if min_col_id<min_row_id:
+        if col_sign_lst[min_col_id]<0:
+            return {'line':'col','id':min_col_id}
+    elif row_sign_lst[min_row_id]>=0:
+        return {'line':'col','id':min_col_id}
+    return {'line':'row','id':min_row_id}
