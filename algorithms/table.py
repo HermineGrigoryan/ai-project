@@ -35,8 +35,6 @@ class Table():
 
         selected_row = np.random.choice(range(int(self.row_shape)), int(self.row_shape*p), replace=False)
         selected_col = np.random.choice(range(int(self.col_shape)), int(self.col_shape*p), replace=False)
-        # print('selected_row:',selected_row)
-        # print('selected_col',selected_col)
         randomized_board = self.board
         randomized_board[selected_row, :] = -1 * self.board[selected_row, :]
         randomized_board[:, selected_col] = -1 * self.board[:, selected_col]
@@ -48,3 +46,7 @@ class Table():
         if np.min(np.append(self.line_sums[0],self.line_sums[1], axis=0))<0:
             return False
         return True
+
+    @property
+    def get_utility(self):
+        return np.sum(self.board)

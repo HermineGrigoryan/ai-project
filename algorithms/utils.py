@@ -1,4 +1,6 @@
 import numpy as np
+import random
+import math
 
 from table import Table
 
@@ -8,7 +10,6 @@ def generate_random_states(table,k,p):
         table_class_lst[i].set_board(table.board)
         table_class_lst[i].randomize_board_signs(p=p)
     return table_class_lst
-
 
 def k_best_moves(table, k):
     row_best, col_best = [], []
@@ -40,3 +41,27 @@ def find_k_best_board_ids(board_list, k):
         maxlist.append(cur_best_id)
         util_list[cur_best_id] = float('-inf')
     return maxlist
+
+def negative_line_ids(table):
+    line_dict = {'row':[], 'col':[]}
+    for i in range(len(table.line_sums[0])):
+        if table.line_sums[0][i]<0:
+            line_dict['row'].append(i)
+    for i in range(len(table.line_sums[1])):
+        if table.line_sums[1][i]<0:
+            line_dict['col'].append(i)
+    line_dict['row'], line_dict['col'] = np.array(line_dict['row'], dtype=int), np.array(line_dict['col'], dtype=int)
+    return line_dict
+
+def choose_random(table,dict):
+    row_lst, col_lst = dict.values()
+    col_lst = col_lst+table.row_shape
+    appended_lst = np.append(row_lst, col_lst, axis=0)
+    if len(appended_lst)==0:
+        raise Exception('The passed list is empty')
+    chosen_id = np.random.choice(np.append(row_lst, col_lst, axis=0))
+    line_type = 'row'
+    if chosen_id>=table.row_shape:
+        line_type = 'col'
+        chosen_id = chosen_id-table.row_shape
+    return {'line':line_type, 'id':chosen_id}
