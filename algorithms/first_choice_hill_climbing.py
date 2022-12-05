@@ -1,6 +1,7 @@
 import argparse
 import numpy as np
 import time
+import pandas as pd
 
 from table import Table
 from utils import get_first_id_row_first
@@ -20,8 +21,6 @@ elif args.choose_function=='row_col':
 else:
     raise Exception('Please input a valid choosing function')
 
-tb = Table(row_shape=args.row_shape, col_shape=args.col_shape)
-tb.create_table()
 
 def first_choice_hill_climbing(table):
     num_iter = 0
@@ -39,4 +38,17 @@ def first_choice_hill_climbing(table):
         else:
             table.set_board(table.get_col_changed(change_id['id']))
 
-print(first_choice_hill_climbing(tb))
+results = {'utility': [], 'niter': [], 'time': []}
+
+for iter in range(10):
+    tb = Table(row_shape=args.row_shape, col_shape=args.col_shape)
+    tb.create_table()
+    tmp_results = first_choice_hill_climbing(tb)
+    
+    results['utility'].append(tmp_results['solution utility'])
+    results['niter'].append(tmp_results['number of iterations'])
+    results['time'].append(tmp_results['time'])
+
+
+resdf = pd.DataFrame(results)
+resdf.to_csv('data/first_choice_hill_climbing.csv')

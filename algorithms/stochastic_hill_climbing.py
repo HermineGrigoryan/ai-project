@@ -1,6 +1,7 @@
 import argparse
 import numpy as np
 import time
+import pandas as pd
 
 from table import Table
 from utils import negative_line_ids
@@ -12,8 +13,6 @@ parser.add_argument('-row_shape', type=int, help='number of rows of the table')
 parser.add_argument('-col_shape', type=int, help='number of columns of the table')
 args = parser.parse_args()
 
-tb = Table(row_shape=args.row_shape, col_shape=args.col_shape)
-tb.create_table()
 
 def stochastic_hill_climbing(table):
     num_iter = 0
@@ -32,4 +31,17 @@ def stochastic_hill_climbing(table):
         else:
             table.set_board(table.get_col_changed(chosen_id['id']))
 
-print(stochastic_hill_climbing(tb))
+results = {'utility': [], 'niter': [], 'time': []}
+
+for iter in range(10):
+    tb = Table(row_shape=args.row_shape, col_shape=args.col_shape)
+    tb.create_table()
+    tmp_results = stochastic_hill_climbing(tb)
+    
+    results['utility'].append(tmp_results['solution utility'])
+    results['niter'].append(tmp_results['number of iterations'])
+    results['time'].append(tmp_results['time'])
+
+
+resdf = pd.DataFrame(results)
+resdf.to_csv('data/stochastic_hill_climbing.csv')

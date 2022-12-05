@@ -2,6 +2,7 @@ import numpy as np
 import argparse
 import time
 import math
+import pandas as pd
 
 from table import Table
 from utils import generate_random_states
@@ -42,4 +43,18 @@ def k_beams(table, k, p):
                 'number of iterations': num_iter, 
                 'time': abstime}
 
-print(k_beams(table=tb, k=args.k, p=0.5))
+p = 0.5
+results = {'utility': [], 'niter': [], 'time': [], 'k': [], 'p':p}
+
+for iter in range(10):
+    tb = Table(row_shape=args.row_shape, col_shape=args.col_shape)
+    tb.create_table()
+    tmp_results = k_beams(table=tb, k=args.k, p=p)
+    
+    results['utility'].append(tmp_results['solution utility'])
+    results['niter'].append(tmp_results['number of iterations'])
+    results['time'].append(tmp_results['time'])
+
+
+resdf = pd.DataFrame(results)
+resdf.to_csv('data/first_choice_hill_climbing.csv')

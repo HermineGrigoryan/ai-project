@@ -1,6 +1,7 @@
 import argparse
 import numpy as np
 import time
+import pandas as pd
 
 from table import Table
 from utils import choose_best_move, negative_line_ids
@@ -44,7 +45,17 @@ def hill_climbing(table):
             table.board = next_board
 
 
-for i in range(100):
+results = {'utility': [], 'niter': [], 'time': []}
+
+for iter in range(10):
     tb = Table(row_shape=args.row_shape, col_shape=args.col_shape)
     tb.create_table()
-    print(hill_climbing(tb))
+    tmp_results = hill_climbing(tb)
+    
+    results['utility'].append(tmp_results['solution utility'])
+    results['niter'].append(tmp_results['number of iterations'])
+    results['time'].append(tmp_results['time'])
+
+
+resdf = pd.DataFrame(results)
+resdf.to_csv('data/hill_climbing.csv')

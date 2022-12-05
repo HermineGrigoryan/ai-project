@@ -51,7 +51,17 @@ def simulated_annealing(table, init_temperature):
         current_temp = init_temperature / float(num_iter + 1)
 
 
-for i in range(10):
+results = {'utility': [], 'niter': [], 'time': []}
+
+for iter in range(10):
     tb = Table(row_shape=args.row_shape, col_shape=args.col_shape)
     tb.create_table()
-    print(simulated_annealing(tb, init_temperature=args.init_temperature))
+    tmp_results = simulated_annealing(tb)
+    
+    results['utility'].append(tmp_results['solution utility'])
+    results['niter'].append(tmp_results['number of iterations'])
+    results['time'].append(tmp_results['time'])
+
+
+resdf = pd.DataFrame(results)
+resdf.to_csv('data/simulated_annealing.csv')
