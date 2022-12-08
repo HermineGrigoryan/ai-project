@@ -87,7 +87,6 @@ def choose_random(table, dct):
 
 def choose_best_move(table):
     row_lst, col_lst = table.line_sums
-    col_lst = col_lst+table.row_shape
     appended_lst = np.append(row_lst, col_lst, axis=0)
     chosen_id = np.argmin(appended_lst)
     line_type = 'row'

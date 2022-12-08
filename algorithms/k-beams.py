@@ -3,6 +3,8 @@ import argparse
 import time
 import math
 import pandas as pd
+import os
+import shutil
 
 from table import Table
 from utils import generate_random_states
@@ -14,6 +16,9 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-row_shape', type=int, help='number of rows of the table')
 parser.add_argument('-col_shape', type=int, help='number of columns of the table')
 parser.add_argument('-k', type=int, help='parameter k in k-beams algorithm')
+parser.add_argument('-p', type=float, help='the parameter of randomization')
+parser.add_argument('-exper_num', type=int, help='the number of times to perform the experiment')
+parser.add_argument('-results_dir', type=str, help='directory to save the results')
 args = parser.parse_args()
 
 tb = Table(row_shape=args.row_shape, col_shape=args.col_shape)
@@ -43,18 +48,21 @@ def k_beams(table, k, p):
                 'number of iterations': num_iter, 
                 'time': abstime}
 
-p = 0.5
-results = {'utility': [], 'niter': [], 'time': [], 'k': [], 'p':p}
+results = {'utility': [], 'niter': [], 'time': []}
 
-for iter in range(10):
+for iter in range(args.exper_num):
     tb = Table(row_shape=args.row_shape, col_shape=args.col_shape)
     tb.create_table()
-    tmp_results = k_beams(table=tb, k=args.k, p=p)
+    tmp_results = k_beams(table=tb, k=args.k, p=args.p)
     
     results['utility'].append(tmp_results['solution utility'])
     results['niter'].append(tmp_results['number of iterations'])
     results['time'].append(tmp_results['time'])
 
+exper_dir = f'results/k-beams/{args.results_dir}'
+
+if os.path.isdir(exper_dir):
+    shutil.rmtree(exper_dir)
 
 resdf = pd.DataFrame(results)
-resdf.to_csv('data/first_choice_hill_climbing.csv')
+resdf.to_csv(exper_dir)
