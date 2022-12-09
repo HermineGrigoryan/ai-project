@@ -102,7 +102,6 @@ if navigation == 'Simulations':
 
     try:
         if solution_algo == 'Hill climbing':
-            st.write((f'results/hill_climbing/hill_climbing_{row}_{col}.csv'))
             data = pd.read_csv(f'results/hill_climbing/hill_climbing_{row}_{col}.csv')
 
         if solution_algo == 'Pseudo stochastic hill climbing':
