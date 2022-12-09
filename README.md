@@ -21,7 +21,7 @@ The **app** folder contains the following files:
 - requirements.txt
 
 The app was created using streamlit module, and can be run using the following command:
-```streamlit run app.py```.
+```streamlit run app.py```. The deployed version of the app can be found [here](https://herminegrigoryan-ai-project-appapp-k6xyaq.streamlit.app/).
 
 The **results** folder contains the subfolders of the csv files for each algorithm for different board sizes.
 
