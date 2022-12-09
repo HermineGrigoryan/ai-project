@@ -2,8 +2,7 @@ import argparse
 import numpy as np
 import time
 import pandas as pd
-import shutil
-import os
+from tqdm import tqdm
 
 from table import Table
 from utils import negative_line_ids
@@ -13,8 +12,7 @@ from utils import choose_random
 parser = argparse.ArgumentParser()
 parser.add_argument('-row_shape', type=int, help='number of rows of the table')
 parser.add_argument('-col_shape', type=int, help='number of columns of the table')
-parser.add_argument('-exper_num', type=int, help='the number of times to perform the experiment')
-parser.add_argument('-results_dir', type=str, help='directory to save the results')
+parser.add_argument('-simulations', type=int, help='the number of simulations')
 args = parser.parse_args()
 
 
@@ -37,7 +35,7 @@ def stochastic_hill_climbing(table):
 
 results = {'utility': [], 'niter': [], 'time': []}
 
-for iter in range(args.exper_num):
+for iter in tqdm(range(args.simulations)):
     tb = Table(row_shape=args.row_shape, col_shape=args.col_shape)
     tb.create_table()
     tmp_results = stochastic_hill_climbing(tb)
@@ -46,10 +44,6 @@ for iter in range(args.exper_num):
     results['niter'].append(tmp_results['number of iterations'])
     results['time'].append(tmp_results['time'])
 
-exper_dir = f'results/stochastic/{args.results_dir}'
-
-if os.path.isdir(exper_dir):
-    shutil.rmtree(exper_dir)
 
 resdf = pd.DataFrame(results)
-resdf.to_csv(exper_dir)
+resdf.to_csv(f'results/stochastic_hill_climbing/stochastic_hill_climbing_{args.row_shape}_{args.col_shape}.csv', index=False)
