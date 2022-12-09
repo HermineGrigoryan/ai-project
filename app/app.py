@@ -102,23 +102,23 @@ if navigation == 'Simulations':
 
     try:
         if solution_algo == 'Hill climbing':
-            data = pd.read_csv(f'../results/hill_climbing/hill_climbing_{row}_{col}.csv')
+            data = pd.read_csv(f'results/hill_climbing/hill_climbing_{row}_{col}.csv')
 
         if solution_algo == 'Pseudo stochastic hill climbing':
-            data = pd.read_csv(f'../results/pseudo_stochastic_hill_climbing/pseudo_stochastic_hill_climbing_{row}_{col}.csv')
+            data = pd.read_csv(f'results/pseudo_stochastic_hill_climbing/pseudo_stochastic_hill_climbing_{row}_{col}.csv')
 
         if solution_algo == 'First-choice hill climbing':
             choose_function = col2_algo.selectbox('Function', ['row_first', 'row_col'])
-            data = pd.read_csv(f'../results/first_choice_hill_climbing/first_choice_hill_climbing_{row}_{col}_{choose_function}.csv')
+            data = pd.read_csv(f'results/first_choice_hill_climbing/first_choice_hill_climbing_{row}_{col}_{choose_function}.csv')
 
         if solution_algo == 'Simulated annealing':
             init_temperature = col2_algo.radio('Initial temperature', [1, 10, 100], horizontal=True)
-            data = pd.read_csv(f'../results/simulated_annealing/simulated_annealing_{row}_{col}_{init_temperature}.csv')
+            data = pd.read_csv(f'results/simulated_annealing/simulated_annealing_{row}_{col}_{init_temperature}.csv')
 
         if solution_algo == 'K-beams':
             k = col2_algo.selectbox('K', [3])
             p = col3_algo.selectbox('P', [0.5])
-            data = pd.read_csv(f'../results/k_beams/k_beams_{row}_{col}_{k}_{p}.csv')
+            data = pd.read_csv(f'results/k_beams/k_beams_{row}_{col}_{k}_{p}.csv')
 
         profiling_table = data.describe().T
         st.write(profiling_table)
@@ -157,7 +157,7 @@ if navigation == 'Simulations':
         for i in datasets:
             try:
                 folder_name = re.findall(r'(\w+?)(\d+)', i)[0][0][:-1]
-                tmp_df = pd.read_csv(f'../results/{folder_name}/{i}.csv')
+                tmp_df = pd.read_csv(f'results/{folder_name}/{i}.csv')
                 tmp_df['algorithm'] = folder_name.replace('_', ' ').strip()
                 all_data = pd.concat([all_data, tmp_df], ignore_index=True)
             except FileNotFoundError:
