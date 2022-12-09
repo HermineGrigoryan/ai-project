@@ -15,10 +15,6 @@ st.sidebar.markdown("[![Foo](https://roost.ai/hs-fs/hubfs/logos/integrations/log
 st.sidebar.markdown('# User Input Variables')
 navigation = st.sidebar.radio('Navigation', ('Create a board', 'Simulations'))
 
-import os
-st.write(os.listdir())
-st.write(os.listdir('results'))
-st.write(os.listdir('results/hill_climbing'))
 
 ##################################
 #### Quantitative Analysis #######
