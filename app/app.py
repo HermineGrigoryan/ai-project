@@ -17,7 +17,7 @@ navigation = st.sidebar.radio('Navigation', ('Create a board', 'Simulations'))
 
 import os
 st.write(os.listdir())
-st.write(os.listdir('results'))
+st.write(os.listdir('app/results'))
 
 ##################################
 #### Quantitative Analysis #######
