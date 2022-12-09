@@ -57,7 +57,7 @@ if navigation == 'Create a board':
     if solution_algo == 'Hill climbing':
         results = algo.hill_climbing(tb)
 
-    if solution_algo == 'Stochastic hill climbing': 
+    if solution_algo == 'Pseudo stochastic hill climbing': 
         results = algo.stochastic_hill_climbing(tb)
 
     if solution_algo == 'First-choice hill climbing':
