@@ -3,7 +3,7 @@ This repository contains codes for AI course. The problem statement of this proj
 
 Real numbers are written in an m×n table. It is permissible to reverse the signs of all numbers in any row or column.  Develop an AI that from a given    board obtains a board, such that the sums of numbers along each line (row and column) are nonnegative.
 
-In order to solve this proble, various local search algorithms were applied, such as hill climbing, pseudo-stochastic hill climbing, first-choice hill climbing, simulated annealing and k-beams. The experiments are conducted using $3×4, 45×50, 100×120, 250×300$ tables generated using $N~(0,20)$ random normal distribution. 10,000 simulations are conducted for $3×4, 45×50, 100×120$ boards, and 1,000 simulations for $250×300$ board. 
+In order to solve this proble, various local search algorithms were applied, such as hill climbing, pseudo-stochastic hill climbing, first-choice hill climbing, simulated annealing and k-beams. The experiments are conducted using $3×4, 45×50, 100×120, 250×300$ tables generated using $N ~ (0,20)$ random normal distribution. 10,000 simulations are conducted for $3×4, 45×50, 100×120$ boards, and 1,000 simulations for $250×300$ board. 
 
 The codes are organized in the following manner:
 
